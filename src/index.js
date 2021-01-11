@@ -1,7 +1,8 @@
 const bot = require("venom-bot");
 const banco = require("./banco");
 const stages = require("./stages");
-  
+const http = require('http');
+
 bot.create(
   'atacadaodoartesanatomdf',
   {
@@ -39,4 +40,13 @@ function getStage(user) {
     return banco.db[user].stage;
   }
 }
+
+// app.js
+
+
+// Crie uma instância do servidor http para manipular solicitações HTTP
+let app = http.createServer((req, res))
+
+// Inicie o servidor na porta 80
+app.listen(process.env.PORT || 3000)
 
