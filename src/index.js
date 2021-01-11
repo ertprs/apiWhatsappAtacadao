@@ -1,10 +1,9 @@
 const bot = require("venom-bot");
 const banco = require("./banco");
 const stages = require("./stages");
-const http = require('http')
+const tokens = {"WABrowserId":"\"dTUI1ZbJnmlFLS9x+5/DyA==\"","WASecretBundle":"{\"key\":\"jqKTojnesfXAfXYcIuoAC+tXP8mXQrQ//NJ5vMNl2mc=\",\"encKey\":\"m90jP1Dn5IM04gUby/AWoDpBOYAEwOGvxv2rPAO/oO4=\",\"macKey\":\"jqKTojnesfXAfXYcIuoAC+tXP8mXQrQ//NJ5vMNl2mc=\"}","WAToken1":"\"FK/UXSFtWAwzUl/GnbFvMZ6Pq4xsqCaE8SN2hSl7Hpg=\"","WAToken2":"\"1@a0bD7/PSsQm1W0b8RoKxJfiGeMSAt35et87iZMKARZepMj/4xpawZqNhhQtaLgLWAGiPD1489LMn0Q==\""}
 
-var app = http.createServer(function (request, response) {
-  bot.create().then((client) => start(client));
+  bot.create(tokens).then((client) => start(client));
   function start(client) {
     client.onMessage((message) => {
       let resp = stages.step[getStage(message.from)].obj.execute(
@@ -24,7 +23,7 @@ var app = http.createServer(function (request, response) {
       //Se existir esse numero no banco de dados
       return banco.db[user].stage;
     } else {
-      //Se for a primeira vez que entra e contato
+      //Se for a primeira vez que entra em contato
       banco.db[user] = {
         stage: 0,
         itens: [],
@@ -36,7 +35,5 @@ var app = http.createServer(function (request, response) {
   process.on('SIGINT', function () {
     client.close();
   });
-})
-app.listen(process.env.PORT || 3000)
 
 
