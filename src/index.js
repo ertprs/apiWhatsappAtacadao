@@ -1,8 +1,17 @@
 const bot = require("venom-bot");
 const banco = require("./banco");
 const stages = require("./stages");
-
-bot.create().then((client) => start(client));
+  
+bot.create(
+  'atacadaodoartesanatomdf',
+  {
+    WABrowserId: "\"KThMhg774n6b5KjWljH7rA==\"",
+    WASecretBundle:
+    "{\"key\":\"ZSgy+AiNv+4ps2HhzfZfQe3JnyyniNssq74deYYGgE4=\",\"encKey\":\"hzM0iX8pvFFuUaFxYUz4UcHJ0EBmGdzPsY47YxU54iM=\",\"macKey\":\"ZSgy+AiNv+4ps2HhzfZfQe3JnyyniNssq74deYYGgE4=\"}",
+    WAToken1: "\"4Q4JzBG2vtOL/zBTs7jwdY+tA4MlaUy9N9BIBqlb3dA=\"",
+    WAToken2: "\"1@XrXYEza3VCMkAJOppyoB1UTuy96MuCLxZz8Q33GuBYINZebNLjzqshW50a7Kr2/siY36K7G6DB+F7A==\"",
+  }
+).then((client) => start(client));
 function start(client) {
   client.onMessage((message) => {
     let resp = stages.step[getStage(message.from)].obj.execute(
@@ -30,21 +39,4 @@ function getStage(user) {
     return banco.db[user].stage;
   }
 }
-
-bot.create(
-    'atacadaodoartesanatomdf',
-    {
-      WABrowserId: "\"KThMhg774n6b5KjWljH7rA==\"",
-      WASecretBundle:
-      "{\"key\":\"ZSgy+AiNv+4ps2HhzfZfQe3JnyyniNssq74deYYGgE4=\",\"encKey\":\"hzM0iX8pvFFuUaFxYUz4UcHJ0EBmGdzPsY47YxU54iM=\",\"macKey\":\"ZSgy+AiNv+4ps2HhzfZfQe3JnyyniNssq74deYYGgE4=\"}",
-      WAToken1: "\"4Q4JzBG2vtOL/zBTs7jwdY+tA4MlaUy9N9BIBqlb3dA=\"",
-      WAToken2: "\"1@XrXYEza3VCMkAJOppyoB1UTuy96MuCLxZz8Q33GuBYINZebNLjzqshW50a7Kr2/siY36K7G6DB+F7A==\"",
-    }
-  )
-  .then((client) => {
-    start(client);
-  })
-  .catch((erro) => {
-    console.log(erro);
-  });
 
