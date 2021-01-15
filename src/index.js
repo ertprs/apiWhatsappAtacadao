@@ -31,8 +31,4 @@ const stages = require("./stages");
     }
   }
 
-  process.on('SIGINT', function () {
-    client.close();
-  });
-
 
