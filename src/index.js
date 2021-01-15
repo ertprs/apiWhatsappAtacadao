@@ -1,15 +1,12 @@
 const bot = require("venom-bot");
 const banco = require("./banco");
 const stages = require("./stages");
-const express = require('express')
+const express = require('express');
+const http = require('http')
 
-const app = express()
-var URL_APP = process.env.PORT || '3000';
-app.listen(URL_APP);
-
-
-bot.create().then((client) => start(client));
-function start(client) {
+http.listen((process.env.PORT || 5000), function(){
+  bot.create().then((client) => start(client));
+  function start(client) {
     client.onMessage((message) => {
       let resp = stages.step[getStage(message.from)].obj.execute(
         message.from,
@@ -36,6 +33,10 @@ function start(client) {
         return banco.db[user].stage;
       }
     }
+});
+
+
+
 
 
   
